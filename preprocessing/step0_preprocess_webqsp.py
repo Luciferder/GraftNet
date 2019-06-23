@@ -25,12 +25,12 @@ stopwords.add("'s")
 
 def extract_keywords(text):
     """Remove wh-words and stop words from text."""
-    return u" ".join([token for token in nltk.word_tokenize(text)
+    return u" ".join([token for token in nltk.word_tokenize(text)     #str前加u表示用unicode编码
         if token not in stopwords])
 
 def get_answers(question):
     """extract unique answers from question parses."""
-    answers = set()
+    answers = set()                                #设为集合
     for parse in question["Parses"]:
         for answer in parse["Answers"]:
             answers.add((answer["AnswerArgument"],
@@ -62,8 +62,8 @@ for fil in in_files:
                  if answer[0].startswith("m.") or answer[0].startswith("g.") else answer[0],
                  "text": answer[1]}
                 for answer in get_answers(question)
-            ]
+            ]                                              #answers是一个list，每个元素(answer)是一个字典
         }
         questions.append(q_obj)
 
-json.dump(questions, open(out_json, "w"))
+json.dump(questions, open(out_json, "w"))        #将dict转为str，并写入文件
